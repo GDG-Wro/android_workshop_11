@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">GDG Android Webinar 11</string>
+    <string name="app_name">GDG Android Webinar 10</string>
+    <string name="value1">1</string>
+    <string name="value2">2</string>
 </resources>
