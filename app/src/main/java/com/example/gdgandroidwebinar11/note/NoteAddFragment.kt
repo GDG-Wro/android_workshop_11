@@ -1,11 +1,14 @@
 package com.example.gdgandroidwebinar11.note
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.gdgandroidwebinar11.AppViewModelFactory
 import com.example.gdgandroidwebinar11.data.NotesService
 import com.example.gdgandroidwebinar11.databinding.FragmentNoteAddBinding
@@ -38,5 +41,17 @@ class NoteAddFragment : Fragment() {
                 activity?.onBackPressed()
             }
         }
+
+        viewModel.savingState.observe(viewLifecycleOwner, Observer {
+            Log.w("AddNoteFragment", "saving state: $it")
+            when (it) {
+                SavingState.Error -> Toast.makeText(
+                    requireContext(),
+                    "error occurred!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                else -> Unit
+            }
+        })
     }
 }
