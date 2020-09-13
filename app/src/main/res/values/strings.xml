@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">GDG Android Webinar 10</string>
-    <string name="value1">1</string>
-    <string name="value2">2</string>
+    <string name="notes_summary_this_month_label">Notes this month:</string>
+    <string name="add_note_save">Save</string>
+    <string name="notes_list_created_label">Notes created: %d</string>
 </resources>
