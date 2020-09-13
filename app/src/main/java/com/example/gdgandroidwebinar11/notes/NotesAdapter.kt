@@ -1,22 +1,18 @@
 package com.example.gdgandroidwebinar11.notes
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gdgandroidwebinar11.R
+import com.example.gdgandroidwebinar11.databinding.ItemNoteBinding
 import com.example.gdgandroidwebinar11.models.Note
-import kotlinx.android.synthetic.main.item_note.view.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class NotesAdapter : ListAdapter<Note, NotesAdapter.NoteViewHolder>(NoteDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_note, parent, false)
-        return NoteViewHolder(view)
+        val binding = ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NoteViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
@@ -33,15 +29,10 @@ class NotesAdapter : ListAdapter<Note, NotesAdapter.NoteViewHolder>(NoteDiffUtil
         }
     }
 
-    inner class NoteViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class NoteViewHolder(private val binding: ItemNoteBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
-            with(view) {
-                noteText.text = note.text
-
-                val date = note.date
-                val dateString = SimpleDateFormat("dd.MM.YYYY", Locale.getDefault()).format(date)
-                noteDate.text = dateString
-            }
+            binding.note = note
         }
     }
 }
