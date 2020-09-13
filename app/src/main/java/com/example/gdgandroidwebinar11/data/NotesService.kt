@@ -2,21 +2,26 @@ package com.example.gdgandroidwebinar11.data
 
 import android.util.Log
 import com.example.gdgandroidwebinar11.models.Note
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.*
 
 object NotesService : INotesService {
-    private val notes = mutableListOf(
+    private var notes = listOf(
         Note("This is first note", Date()),
         Note("This is second note", Date()),
         Note("This is third note", Date())
     )
 
-    override suspend fun getNotes(): List<Note> {
+    private val notesFlow = MutableStateFlow(notes)
+
+    override fun getNotes(): Flow<List<Note>> {
         Log.w(NotesService::class.simpleName, "getNotes")
-        return notes
+        return notesFlow
     }
 
     override suspend fun addNote(note: Note) {
-        notes.add(note)
+        notes = notes.plus(note)
+        notesFlow.value = notes
     }
 }

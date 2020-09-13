@@ -6,19 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.gdgandroidwebinar11.AppViewModelFactory
 import com.example.gdgandroidwebinar11.R
-import com.example.gdgandroidwebinar11.data.INotesService
 import com.example.gdgandroidwebinar11.data.NotesService
+import com.example.gdgandroidwebinar11.main.MainViewModel
 import com.example.gdgandroidwebinar11.note.NoteAddFragment
 import kotlinx.android.synthetic.main.fragment_notes_list.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class NotesListFragment : Fragment() {
 
-    private val notesService: INotesService = NotesService
-
+    private val mainViewModel: MainViewModel by activityViewModels {
+        AppViewModelFactory(
+            NotesService
+        )
+    }
     private val notesAdapter: NotesAdapter = NotesAdapter()
 
     override fun onCreateView(
@@ -49,9 +55,10 @@ class NotesListFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            val notes = notesService.getNotes()
-            notesLabel.text = getString(R.string.notes_list_created_label, notes.size)
-            notesAdapter.submitList(notes)
+            mainViewModel.notes.collect { notes ->
+                notesLabel.text = getString(R.string.notes_list_created_label, notes.size)
+                notesAdapter.submitList(notes)
+            }
         }
     }
 }
