@@ -15,7 +15,7 @@ class NoteAddViewModel(private val notesService: INotesService) : ViewModel() {
     val noteDate = MutableLiveData<Date>(Date())
 
     init {
-        Log.w("NoteAddViewModel", "init viewModel")
+        //Log.w("NoteAddViewModel", "init viewModel")
     }
 
     fun addNote(callback: () -> Unit) {
